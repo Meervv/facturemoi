@@ -1,16 +1,33 @@
-import { SessionProvider } from "next-auth/react"
-import { ReactNode, ComponentType } from "react";
+"use client"; // Assurez-vous que ce commentaire est au début du fichier
 
-interface AppProps {
-  Component: ComponentType<any>;
-  pageProps: {
-    session: any;
-    pageProps: any;
-  };
-}
+import { useAuth } from '@/context/AuthContext';
+import { useEffect } from 'react';
 
-export default function App() {
-  return (
-    <h1>HOME</h1>
-  );
-}
+const Profil = () => {
+    const { isLoggedIn, login, logout } = useAuth();
+
+    useEffect(() => {
+        // Simuler une connexion pour l'exemple
+        const token = localStorage.getItem('token');
+        if (token) {
+            login(token);
+        }
+    }, [login]);
+
+    return (
+        <div>
+            {isLoggedIn ? (
+                <div>
+                    <h1>Bienvenue, vous êtes connecté !</h1>
+                </div>
+            ) : (
+                <div>
+                    <h1>Veuillez vous connecter</h1>
+                    <button onClick={() => login('dummy-token')}>Se connecter</button>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Profil;
