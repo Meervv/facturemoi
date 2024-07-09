@@ -8,7 +8,7 @@ const TarifPage = () => {
         <div>
         <div className="pb-5 md:pb-10">
           <div className="flex justify-center pb-5">
-            <PsychologyIcon className="w-[50px] h-[50px]" />
+            <PsychologyIcon style={{ width: '50px', height: '50px', fill: '#7D7E75' }} />
           </div>
           <div className="text-center font-bold w-[100%] md:w-[70%] mx-auto pb-5">
             <h1 className="text-[1.7rem] text-[#333333] leading-8">
