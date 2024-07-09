@@ -2,13 +2,14 @@
 
 import React, { useState } from "react";
 
-import { AppBar, Box, Button, Container, IconButton, Menu, Toolbar, Typography, Tooltip, Avatar } from "@mui/material";
+import { AppBar, Box, Button, Container, IconButton, Menu, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import Link from "next/link";
 
 import { useRouter } from 'next/navigation';
+import { useAuth } from "@/context/AuthContext";
 
 const pages = [
     { label: "Accueil", href: "/" },
@@ -19,50 +20,37 @@ const pages = [
 
 const Navbar: React.FC = () => {
 
-    //router de next/navigation
-    const router = useRouter();
+  const { isLoggedIn, logout } = useAuth();
+  const router = useRouter();
 
-    //permet de savoir si le menu est ouvert
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null); 
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-    //permet de fermer le menu
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorElNav(event.currentTarget);
+  };
 
-     //permet de savoir si l'utilisateur est connecté
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorElUser(event.currentTarget);
+  };
 
-    //permet de savoir si l'utilisateur est connecté
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
+  const handleCloseNavMenu = () => {
+      setAnchorElNav(null);
+  };
 
-    //fonction qui permet d'ouvrir le menu
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
+  const handleCloseUserMenu = () => {
+      setAnchorElUser(null);
+  };
 
-    //fonctions qui permet de fermer le menu
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+  const handleLogout = () => {
+      logout(); // Appel à la fonction logout depuis le contexte
+      router.push('/connexion'); // Redirige vers la page de connexion après la déconnexion
+  };
 
-    //permet de déconnecter l'utilisateur
-    const handleLogout = () => {
-        document.cookie = 'token=; Max-Age=0; path=/;'; // Supprime le cookie
-        setIsLoggedIn(false); // Met à jour l'état de connexion après la déconnexion
-        router.push('/connexion'); // Redirige vers la page de connexion
-    };
-
-    // Menu de l'utilisateur
-    const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  const settings = ["Profile", "Account", "Dashboard", "Logout"];
     
-    return (
-        <AppBar
-      position="static"
-      style={{ backgroundColor: "white", color: "black" }}>
+  return (
+    <AppBar position="static" style={{ backgroundColor: "white", color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -140,8 +128,22 @@ const Navbar: React.FC = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0, display: 'flex', gap: '10px'}}>
-            <Button 
+            <Button
               sx={{
+                fontSize: "0.8rem",
+                backgroundColor: "#7D7E75",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#6c6d63", // Couleur de fond au survol
+                  color: "white", // Couleur du texte au survol
+                },
+              }}
+              href="/contact">
+              Contactez-nous
+            </Button>
+            {isLoggedIn ? (
+              <Button
+                sx={{
                   fontSize: "0.8rem",
                   backgroundColor: "#7D7E75",
                   color: "white",
@@ -150,23 +152,13 @@ const Navbar: React.FC = () => {
                     color: "white", // Couleur du texte au survol
                   },
                 }}
-                href="/contact">
-                Contactez-nous
+                onClick={handleLogout}>
+                Déconnexion
               </Button>
-            {isLoggedIn ? (
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    sx={{ p: 0, backgroundColor: "#7D7E75", color: "white" }}
-                    alt=""
-                    src=""
-                  />
-                </IconButton>
-              </Tooltip>
             ) : (
               <Button
-                  sx={{
-                    fontSize: "0.8rem",
+                sx={{
+                  fontSize: "0.8rem",
                   backgroundColor: "#7D7E75",
                   color: "white",
                   "&:hover": {
@@ -177,7 +169,6 @@ const Navbar: React.FC = () => {
                 href="/connexion">
                 Connexion
               </Button>
-              // <Button color="inherit" onClick={() => setIsLoggedIn(true)}>Login</Button>
             )}
             <Menu
               sx={{ mt: "45px" }}
@@ -208,7 +199,7 @@ const Navbar: React.FC = () => {
         </Toolbar>
       </Container>
     </AppBar>
-    )
-}
+  );
+};
 
 export default Navbar;
