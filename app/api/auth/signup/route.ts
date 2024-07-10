@@ -6,6 +6,7 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const { email, firstname, lastname, password } = body;
+        const created_at = new Date()
 
         // Check if the required fields are provided
         if (!email || !firstname || !lastname || !password) {
@@ -17,8 +18,8 @@ export async function POST(req: NextRequest) {
         // Log the input data for debugging
         console.log(email, firstname, lastname, hashedPassword);
 
-        const query = "INSERT INTO users (email, firstname, lastname, password) VALUES (?, ?, ?, ?)";
-        const values = [email, firstname, lastname, hashedPassword];
+        const query = "INSERT INTO users (email, firstname, lastname, password, created_at) VALUES (?, ?, ?, ?, ?)";
+        const values = [email, firstname, lastname, hashedPassword, created_at];
 
         // Execute the query and log the result
         const result = await pool.query(query, values);
