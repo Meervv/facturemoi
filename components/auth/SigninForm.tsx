@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useRouter } from 'next/navigation'; // Utiliser le hook de navigation pour la redirection
+import { useRouter } from 'next/navigation';
 
 const defaultTheme = createTheme();
 
