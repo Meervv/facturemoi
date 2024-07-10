@@ -1,61 +1,30 @@
-import React, { useState } from 'react';
-import {
-  Avatar,
-  Button,
-  CssBaseline,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Grid,
-  Box,
-  Typography,
-  Container,
-  ThemeProvider,
-  createTheme,
-  Alert
-} from '@mui/material';
+"use client"
+
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
-const SignupForm = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+export default function ContactForm() {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const payload = {
+    console.log({
       email: data.get('email'),
-      firstname: data.get('firstName'),
-      lastname: data.get('lastName'),
       password: data.get('password'),
-    };
-
-    try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message);
-        setSuccess(false);
-        return;
-      }
-
-      setError(null);
-      setSuccess(true);
-    } catch (error) {
-      console.error('Signup error:', error);
-      setError('Erreur lors de l\'inscription. Veuillez réessayer.');
-      setSuccess(false);
-    }
+    });
   };
 
   return (
@@ -76,8 +45,6 @@ const SignupForm = () => {
           <Typography component="h1" variant="h5">
             Inscription
           </Typography>
-          {error && <Alert severity="error" sx={{ mt: 2, width: '100%' }}>{error}</Alert>}
-          {success && <Alert severity="success" sx={{ mt: 2, width: '100%' }}>Inscription réussie ! Vous pouvez maintenant vous connecter.</Alert>}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -135,11 +102,11 @@ const SignupForm = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              S'inscrire
+                S'inscrire
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="#" variant="body2">
                   Vous avez déjà un compte ? Connectez-vous
                 </Link>
               </Grid>
@@ -149,6 +116,4 @@ const SignupForm = () => {
       </Container>
     </ThemeProvider>
   );
-};
-
-export default SignupForm;
+}
