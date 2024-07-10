@@ -7,10 +7,16 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const { email, firstname, lastname, password } = body;
         const created_at = new Date()
+        const [existingUser] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
 
         // Check if the required fields are provided
         if (!email || !firstname || !lastname || !password) {
             return NextResponse.json({ message: "All fields are required" }, { status: 400 });
+        }
+
+        // Check if the email already exists
+        if (existingUser) {
+            return NextResponse.json({ message: "Email already exists" }, { status: 409 });
         }
 
         const hashedPassword = await hash(password, 10);
