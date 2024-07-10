@@ -21,7 +21,7 @@ const CardPrice: React.FC<CardProps> = ({
   buttonText,
 }) => {
   return (
-    <div className="bg-[#FCFCFC] rounded-lg overflow-hidden shadow-lg border-2 border-[#F2F2F2] cursor-pointer hover:shadow-xl hover:border-[#C484F1] transition duration-300 border-gradient">
+    <div className="bg-[#FCFCFC] rounded-lg overflow-hidden shadow-lg border-2 border-[#F2F2F2] cursor-pointer hover:shadow-xl hover:border-[#7D7E75] transition duration-300 border-gradient">
       <div className="px-6 py-4">
         <div className="text-left my-5">
           <span
