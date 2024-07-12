@@ -45,7 +45,7 @@ const AllCards = () => {
   ];
 
   return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full lg:w-5/6 xl:w-4/6  mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {cards.map((card, index) => (
           <CardPrice key={index} {...card} />
         ))}

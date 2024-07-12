@@ -26,7 +26,9 @@ const TarifPage = () => {
             </p>
           </div>
         </div>
-      <AllCards />
+        <div className="w-full lg:w-5/6 xl:w-4/6  mx-auto">
+            <AllCards />
+        </div>
     </div>
     )
 }

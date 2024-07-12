@@ -1,5 +1,14 @@
-import { SessionProvider } from "next-auth/react"
+"use client";
+
+import { SessionProvider } from "next-auth/react";
 import { ReactNode, ComponentType } from "react";
+import React from "react";
+import AvantageAtout from "../components/home/AvantageAtout";
+import ImageHead from "../components/home/ImageHead";
+
+import Testimonials from "../components/home/Reviews";
+import Price from "../components/home/price";
+import Stats from "@/components/home/stats";
 
 interface AppProps {
   Component: ComponentType<any>;
@@ -11,6 +20,14 @@ interface AppProps {
 
 export default function App() {
   return (
-    <h1>HOME</h1>
+    <div>
+      <ImageHead />
+      <div className="m-20">
+        <AvantageAtout />
+        <Price />
+        <Stats />
+        <Testimonials />
+      </div>
+    </div>
   );
 }
