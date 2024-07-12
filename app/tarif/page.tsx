@@ -5,7 +5,7 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 
 const TarifPage = () => {
     return (
-        <div className="my-20">
+        <div className="m-20">
         <div className="pb-5 md:pb-10">
           <div className="flex justify-center pb-5">
             <PsychologyIcon style={{ width: '50px', height: '50px', fill: '#7D7E75' }} />
